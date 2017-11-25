@@ -3,6 +3,7 @@ using School.Application.Dto;
 using School.Domain.Model;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +17,12 @@ namespace School.Web.Controllers
 
           public ActionResult Index()
           {
+
+              string nameOrConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+              DataBaseService school = new DataBaseService();
+              school.CreateSchool(nameOrConnectionString);
+
+              ViewBag.con = nameOrConnectionString;
 
               List<Student> students = new List<Student>();
               students = schoolApplicationService.GetStudents();
